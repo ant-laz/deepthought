@@ -14,16 +14,40 @@
 
 package com.tonyzaro.deepthought;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 // Spring will find all RestControllers in the same package+sub-package as the main appliaction
 @RestController
 public class DeepthoughtController {
 
+  private Map<String, Answer> db = new HashMap<>() {{
+    put("1", new Answer("1", "Mean of life, universe & everything?", "42"));
+    put("2", new Answer("2", "The perfect age?", "42"));
+    put("3", new Answer("3", "Number of ppl who will use this API?", "42"));
+  }};
+
   @GetMapping("/")
   public String theAnswerToAllQuestions(){
-    return "The answer to your question is ... 42";
+    return "The answer to all questions is ... 42";
+  }
+
+  @GetMapping("/answers")
+  public Collection<Answer> get(){
+    return db.values();
+  }
+
+  @GetMapping("/answers/{id}")
+  public Answer get(@PathVariable String id){
+    Answer answer =  db.get(id);
+    if (answer == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    return answer;
   }
 
 }
