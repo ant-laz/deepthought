@@ -37,4 +37,8 @@ public class Answer {
 
   public Answer() {
   }
+
+  public Answer(String question) {
+    this.question = question;
+  }
 }

@@ -23,6 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DeepthoughtApplication {
 
 	public static void main(String[] args) {
+		// Spring will find all RestControllers in the same package+sub-package as the main appliaction
 		SpringApplication.run(DeepthoughtApplication.class, args);
 	}
 
